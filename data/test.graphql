@@ -1,0 +1,38 @@
+# type User {
+#     id: String # id
+#     name: String #name
+# }
+#
+# type Query {
+#     user(id: String): User
+# }
+
+type User {
+    id: ID!
+    name: String
+    lists: [List]
+}
+
+type List {
+    id: ID!
+    name: String
+    owner: User
+    incomplete_count: Int
+    tasks(completed: Boolean): [Task]
+}
+
+type Task {
+    id: ID!
+    text: String
+    completed: Boolean
+    list: List
+}
+
+type RootQuery {
+    user(id: ID): User
+    users(num: Int): [User]
+}
+
+schema {
+    query: RootQuery
+}
