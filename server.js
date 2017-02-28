@@ -31,7 +31,8 @@ const app = new Koa();
 //     // }
 // });
 
-app.use(mount('/graphiql', convert(graphQLHTTP({
+// curl -XPOST -H 'Content-Type:application/graphql'  -d '{__schema { queryType { name, fields { name, description} }}}' http://localhost:8001/graphql
+app.use(mount('/graphql', convert(graphQLHTTP({
     schema: getSchema(),
     pretty: true,
     graphiql: true
@@ -39,17 +40,6 @@ app.use(mount('/graphiql', convert(graphQLHTTP({
 
 app.use(convert.compose(routes));
 app.use(convert.compose(allowedMethods));
-
-// graphQLServer.use('/schema', (req, res) => {
-//     res.set('Content-Type', 'text/plain');
-//     res.send(printSchema(schema));
-// });
-
-// app.use(async (ctx, next) => {
-//     setCtx(ctx);
-//     await next();
-// });
-
 
 app.use(convert(bodyparser()));
 app.use(convert(json()));
@@ -87,4 +77,6 @@ server.on('error', error => {
 server.on('listening', () => {
     const addr = server.address();
     console.log('Listening at http://localhost:' + addr.port + ' or http://' + getIP() + ':' + addr.port + '\n');
+    console.log('Send Query Example:\n');
+    console.log(`curl -XPOST -H \'Content-Type:application/graphql\' -d \'{__schema { queryType { name, fields { name, description} }}}\' http://${getIP()}:${addr.port}/graphql`);
 });
