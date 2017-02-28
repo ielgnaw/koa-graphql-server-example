@@ -76,7 +76,21 @@ server.on('error', error => {
 
 server.on('listening', () => {
     const addr = server.address();
-    console.log('Listening at http://localhost:' + addr.port + ' or http://' + getIP() + ':' + addr.port + '\n');
-    console.log('Send Query Example:\n');
-    console.log(`curl -XPOST -H \'Content-Type:application/graphql\' -d \'{__schema { queryType { name, fields { name, description} }}}\' http://${getIP()}:${addr.port}/graphql`);
+    console.log(`\nGraphQL Server is now running on http://localhost:${addr.port}/graphql `
+        + `or http://${getIP()}:${addr.port}/graphql`);
+    console.log(`\nShow Schema: http://localhost:${addr.port}/schema or http://${getIP()}:${addr.port}/schema`);
+    console.log('\nIntrospectionQuery:');
+    console.log(`curl -XPOST -H \'Content-Type:application/graphql\' -d `
+        + `\'{__schema {queryType {name fields {name description}} mutationType {name fields {name description}}}}\' `
+        + `http://${getIP()}:${addr.port}/graphql`);
+
+    console.log('\nQuery Example:');
+    console.log(`curl -XPOST -H \'Content-Type:application/graphql\' -d `
+        + `\'{posts {title votes author {id name}}}\' `
+        + `http://${getIP()}:${addr.port}/graphql`);
+
+    console.log('\nMutation Example:');
+    console.log(`curl -XPOST -H \'Content-Type:application/graphql\' -d `
+        + `\'mutation {upvotePost(postId: 2) {id title votes}}\' `
+        + `http://${getIP()}:${addr.port}/graphql`);
 });
