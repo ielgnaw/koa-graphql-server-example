@@ -21,10 +21,10 @@ import {makeExecutableSchema, addMockFunctionsToSchema, MockList} from 'graphql-
 //     }),
 // }});
 const authors = [
-    {id: 1, name: 'Firede'},
-    {id: 2, name: 'ielgnaw'},
-    {id: 3, name: 'Zhai wanli'},
-    {id: 4, name: 'Liang'},
+    {id: 1, name: 'Firede', onlyForEndpoint: 'onlyForEndpoint'},
+    {id: 2, name: 'ielgnaw', onlyForEndpoint: 'onlyForEndpoint'},
+    {id: 3, name: 'Zhai wanli', onlyForEndpoint: 'onlyForEndpoint'},
+    {id: 4, name: 'Liang', onlyForEndpoint: 'onlyForEndpoint'},
 ];
 
 const posts = [
